@@ -1,5 +1,4 @@
 <?php
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -141,8 +140,32 @@
                 document.getElementById("displayProfile").style.display = "none";
             }
         }
+
+        
+        function profileDetails(){
+            console.log(document.cookie);
+            var tempLogInName = getCookie("fullName");
+            document.getElementById('accountNameDetails').innerHTML = tempLogInName;
+        }
+
+        function getCookie(name){
+            const cDecoded = decodeURIComponent(document.cookie);
+            const cArray = cDecoded.split("; ");
+            let result = null;
+            
+            cArray.forEach(element => {
+                if(element.indexOf(name) == 0){
+                    result = element.substring(name.length + 1)
+                }
+            })
+            return result;
+        }
     </script>
     <style>
+        .mouseOverEffects{
+            border-left : 3px solid white;
+        }
+
         .mouseOverEffects:hover{
             border-left : 3px solid #437E96;
         }
@@ -172,13 +195,13 @@
             padding: 3px;
         }
     </style>
-    <body>
+    <body onload="profileDetails()">
         <form>
             <div style="width:1100px;margin-left:auto;margin-right:auto">
                 <div style="float:right">
                     <img src="/fyp_codes/MoshiQ2 Assets/Profile Icon.png" style="display:block;margin-left:auto;width:70px;height:auto" onclick="profileClicked()"></br>
                     <div id="displayProfile" name="displayProfile" hidden>
-                        <span style="margin-right:100px">*Account Name*</span></br>
+                        <text style="margin-left:10%;margin-right:auto;display:inline-block" id="accountNameDetails"></text></br>
                         <input type="button" id="accountDrop" name="accountDrop" value="Account &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&#x25B2;" style="color:gray;margin-left:10px;margin-top:5px;height:30px;" onclick="clickedDrop()">
                         <input type="button" id="accountCollapse" name="accountCollapse" value="Account &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&#x25BC;" style="color:gray;margin-left:10px;margin-top:5px;height:30px;" onclick="clickedCollapse()" hidden>
                         <input type="button" id="accountSignOut" name="accountSignOut" value="Sign out &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;" style="margin-left:10px;margin-right:auto;margin-top:5px;width:188px;height:30px;" onclick="signOut()" hidden>

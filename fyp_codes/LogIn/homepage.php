@@ -1,44 +1,8 @@
-<?php
-require_once('accountDB.php');
-?>
 <!DOCTYPE html>
 <html>
     <script>
-        function checkLogin(){
-            var slotArrays = '<?php echo json_encode($dataArray);?>'.replaceAll('[[','[').replaceAll(']]',']').replaceAll('],',']].').replaceAll('"',"");;
-            var slotArray = slotArrays.split('].');
-            var accountArray = [];
-            var actualAccountArray = []
-            var x;
-            var tempString = "";
-            var tempString1 = "";
-            for (x=0;x<slotArray.length;x++)
-            {
-                accountArray.push(slotArray[x]);
-            }
-            for (x=0;x<accountArray.length;x++){
-                tempString = String(accountArray[x]).replaceAll('[','').replaceAll(']','');
-                tempString = tempString.split(',');
-                actualAccountArray.push(tempString);
-            }
-            for (x=0;x<actualAccountArray.length;x++)
-            {
-                if(document.getElementById("emailInput").value == actualAccountArray[x][3] && 
-                document.getElementById("passwordInput").value == actualAccountArray[x][4]){
-                    if(actualAccountArray[x][1] == "owner"){
-                        alert("owner account");
-                    }
-                    else if (actualAccountArray[x][1] == "admin"){
-                        alert("admin account");
-                    }
-                    else if (actualAccountArray[x][1] == "staff"){
-                        alert("staff account");
-                    }
-                    else{
-                        alert("customer account");
-                    }
-                }
-            }
+        function reservationFunction(){
+            window.location.href = "/fyp_codes/reservation/reservation_details.php";
         }
     </script>
     <style>
@@ -49,7 +13,7 @@ require_once('accountDB.php');
     </style>
     <body>
         <form>
-            <div style="width:1200px;margin-left:auto;margin-right:auto">
+            <div style="width:1200px;margin-left:0px;margin-right:auto">
                 <img src="/fyp_codes/MoshiQ2 Assets/Logo.png" style="float:left;margin-left:0px;width:500px;height:200px;display:block">
                 <div style="padding-top:90px;">
                     <span class="mouseOverEffects" style="width:auto">
@@ -65,7 +29,7 @@ require_once('accountDB.php');
                         <input type="button" value="DELIVERY" style="border:0px;font-size:14;background-color:white">
                     </span>
                     <span class="mouseOverEffects" style="width:auto">
-                        <input type="button" value="RESERVATIONS" style="border:0px;font-size:14;background-color:white">
+                        <input type="button" value="RESERVATIONS" style="border:0px;font-size:14;background-color:white" onclick="reservationFunction()">
                     </span>
                     <span class="mouseOverEffects" style="width:auto">
                         <input type="button" value="TRAFFIC" style="border:0px;font-size:14;background-color:white">

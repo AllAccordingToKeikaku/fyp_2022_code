@@ -49,13 +49,13 @@ require_once("accountDB.php");
             phoneNumber = document.getElementById("contactInput").value;
             profileID;
 
-            if(email.toLowerCase().includes("@moshiqqadmin.com")){
+            if(email.toLowerCase().includes(".moshiqqadmin@gmail.com")){
                 profileID = "admin";
             }
-            else if(email.toLowerCase().includes("@moshiqqowner.com")){
+            else if(email.toLowerCase().includes(".moshiqqowner@gmail.com")){
                 profileID = "owner";
             }
-            else if(email.toLowerCase().includes("@moshiqqstaff.com")){
+            else if(email.toLowerCase().includes(".moshiqqstaff@gmail.com")){
                 profileID = "staff";
             }
             else{
@@ -73,21 +73,21 @@ require_once("accountDB.php");
                     phoneNumber:phoneNumber
                 },
                 success: function(data){
-                Swal.fire({
-                    'title': 'Successfully created your account!',
-                    'text': data,
-                    'type': 'success'
-                    
-                })
+                    Swal.fire({
+                        'title': 'Successfully created your account!',
+                        'text': data,
+                        'type': 'success'
+                    }).then(function(){
+                        location.reload();
+                    });
                 },
                 error: function(data){
                     wrongFunction();
                 }
             });
         }
-
         function backFunction(){
-            checkPassword();
+            window.location.href = "/fyp_codes/LogIn/logInScreen.php";
         }
 
         function checkPassword(){
@@ -290,7 +290,7 @@ require_once("accountDB.php");
                 <input type="text" id="contactInput" name="contactInput" style="background-color:#D9D9D9;border-radius:15px;border:0px;font-size:15px;padding:10px;height:40px;width:300px" onkeyup="checkContact();checkRegister()" onkeypress="return /[0-9]/i.test(event.key)" required></br>
                 <text id="contactError" name="contactError" style="color:red;margin-left:45%;margin-right:auto;width:300px;font-size:15px;display:block"></text></br>
                 <input type="button" class="buttonEffects" id="backButton" name="backButton" value="Back" style="margin-left:40%;margin-right:auto;float:left;width:100px;height:30px;font-size:15px;text-align:center;display:block" onclick="backFunction()">
-                <input type="button" class="buttonEffects" id="registerButton" name="registerButton" value="Register" style="margin-left:55%;margin-right:auto;width:100px;height:30px;font-size:15px;text-align:center;display:block" onclick="registerFunction()">
+                <input type="button" class="buttonEffects" id="registerButton" name="registerButton" value="Register" style="margin-left:55%;margin-right:auto;width:100px;height:30px;font-size:15px;text-align:center;display:block" onclick="registerFunction();">
                 <div class="popup">
                     <span class="popuptext" id="myPopup" style="align-items:center;justify-content:flex-end;font-size:30px;" hidden>
                     <img src="/fyp_codes/MoshiQ2 Assets/Unsuccessful.png">

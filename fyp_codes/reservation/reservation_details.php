@@ -237,10 +237,6 @@ require_once('reservationDB.php');
       }
     }
 
-    function resetColors(){
-
-    }
-
     function submittedDetails(){
       customerID = "1";
       customerName = document.getElementById('name').value;
@@ -427,6 +423,25 @@ require_once('reservationDB.php');
       for (var i=0; i<uncheck.length; i++){
         uncheck[i].checked=false;
       }
+    }
+
+    function profileDetails(){
+        console.log(document.cookie);
+        var tempLogInName = getCookie("fullName");
+        document.getElementById('accountNameDetails').innerHTML = tempLogInName;
+    }
+
+    function getCookie(name){
+        const cDecoded = decodeURIComponent(document.cookie);
+        const cArray = cDecoded.split("; ");
+        let result = null;
+        
+        cArray.forEach(element => {
+            if(element.indexOf(name) == 0){
+                result = element.substring(name.length + 1)
+            }
+        })
+        return result;
     }
   </script>
 

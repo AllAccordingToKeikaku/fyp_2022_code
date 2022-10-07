@@ -2,13 +2,6 @@
 require_once("connection.php");
 ?>
 <?php
-$servername="localhost";
-$username="root";
-$password="";
-$database_name="reservationdatabase";
-
-$conn=mysqli_connect($servername, $username, $password, $database_name);
-
 $query = "SELECT * FROM `reservation`";
 $select = mysqli_query($conn, $query);
 $num_rows = mysqli_num_rows($select);

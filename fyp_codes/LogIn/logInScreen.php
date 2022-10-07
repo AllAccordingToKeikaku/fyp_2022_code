@@ -21,6 +21,77 @@ require_once("accountDB.php");
             document.getElementById("returnButton").style.border = "0px";
             document.getElementById("returnButton").style.borderColor = "";
         }
+
+        function signUpFunction(){
+            window.location.href = "/fyp_codes/LogIn/registerAccount.php";
+        }
+
+        function checkLogIn(){
+            var slotArrays = '<?php echo json_encode($dataArray);?>'.replaceAll('[[','[').replaceAll(']]',']').replaceAll('],',']].').replaceAll('"',"");;
+            var slotArray = slotArrays.split('].');
+            var accountArray = [];
+            var actualAccountArray = []
+            var x;
+            var tempString = "";
+            var tempString1 = "";
+
+            var checkTOF = true;
+            for (x=0;x<slotArray.length;x++)
+            {
+                accountArray.push(slotArray[x]);
+            }
+            for (x=0;x<accountArray.length;x++){
+                tempString = String(accountArray[x]).replaceAll('[','').replaceAll(']','');
+                tempString = tempString.split(',');
+                actualAccountArray.push(tempString);
+            }
+            for (x=0;x<actualAccountArray.length;x++)
+            {
+                if(document.getElementById("inputEmail").value == actualAccountArray[x][3] &&
+                    document.getElementById("inputPassword").value == actualAccountArray[x][4]){
+                    var emailCookieText = document.getElementById("inputEmail").value;
+                    setCookie("email", emailCookieText, 30);
+
+                    var passwordCookieText = document.getElementById("inputPassword").value;
+                    setCookie("password", passwordCookieText, 30);
+
+                    setCookie("fullName", actualAccountArray[x][2], 30);
+                    window.location.href = "/fyp_codes/LogIn/homepage.php";
+                    checkTOF = true;
+                    break;
+                }
+                else{
+                    checkTOF = false;
+                }
+            }    
+            if(checkTOF == false){
+                    alert("Error in logging in");
+            }       
+        }
+
+        function setCookie(nameCookie, valueCookie, timeCookie){
+            const date = new Date();
+            date.setTime(date.getTime() +  (timeCookie * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + date.toUTCString();
+            document.cookie = `${nameCookie}=${valueCookie}; ${expires}; path=/`
+        }
+
+        function deleteCookie(nameOfCookie){
+            setCookie(nameOfCookie, null, null);
+        }
+
+        function getCookie(name){
+            const cDecoded = decodeURIComponent(document.cookie);
+            const cArray = cDecoded.split("; ");
+            let result = null;
+            
+            cArray.forEach(element => {
+                if(element.indexOf(name) == 0){
+                    result = element.substring(name.length + 1)
+                }
+            })
+            return result;
+        }
     </script>
     <style>
         .popup {
@@ -83,11 +154,9 @@ require_once("accountDB.php");
                 <input type="text" id="inputEmail" name="inputEmail" style="background-color:#D9D9D9;border-radius:15px;border:0px;margin-left:auto;margin-right:auto;width:250px;height:30px;padding:20px;font-size:15px;display:block" placeholder="Enter your email"></br>
                 <text id="passwordText" name="passwordText" style="margin-left:auto;margin-right:auto;width:250px;font-size:15px;display:block">Password</text>
                 <input type="text" id="inputPassword" name="inputPassword" style="background-color:#D9D9D9;border-radius:15px;border:0px;margin-left:auto;margin-right:auto;width:250px;height:30px;padding:20px;font-size:15px;display:block" placeholder="Enter your password"></br></br>
-                <input type="button" class="buttonEffects" id="logInButton" name="logInButton" value="Log In"></br>
+                <input type="button" class="buttonEffects" id="logInButton" name="logInButton" value="Log In" onclick="checkLogIn()"></br>
                 <text id="orText" name="orText" style="margin-left:auto;margin-right:auto;width:20px;display:block">OR</text></br>
-                <input type="button" class="buttonEffects" id="signUpButton" name="signUpButton" value="Sign Up"></br>
-                <input type="button" id="correctButton" name="correctButton" style="float:left;margin-left:43%;margin-right:auto;display:block" value="Correct">
-                <input type="button" id="wrongButton" name="wrongButton" style="margin-left:52%;margin-right:auto;display:block" onclick="wrongFunction()" value="Wrong">
+                <input type="button" class="buttonEffects" id="signUpButton" name="signUpButton" value="Sign Up" onclick="signUpFunction()"></br>
                 <div class="popup">
                     <span class="popuptext" id="myPopup" style="align-items:center;display:flex;justify-content:flex-end;font-size:30px;">
                     <img src="/fyp_codes/MoshiQ2 Assets/Unsuccessful.png">
